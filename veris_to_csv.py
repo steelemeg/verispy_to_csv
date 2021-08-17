@@ -3,8 +3,8 @@ import pandas
 import numpy as np
 from verispy import VERIS
 from tkinter import Tk, filedialog, messagebox
-root = Tk() # pointing root to Tk() to use it as Tk() in program.
-root.withdraw() # Hides small tkinter window.
+root = Tk()
+root.withdraw() # Hides the weird little tkinter window.
 guide = messagebox.showinfo(title="Welcome to the Veris-to-CSV Utility", message="The Veris Project uploads new incident reports to a repository at https://github.com/vz-risk/VCDB. Once you have downloaded/cloned the latest, locate the \"validated\" folder and provide it to the file picker in the next step.")
 
 # Flexible folder choosing. This is where the validated JSON file location must be provided.

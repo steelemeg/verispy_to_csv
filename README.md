@@ -1,5 +1,5 @@
 # verispy_to_csv
-Extends the Verispy project, producing a CSV file suitable for import into Onspring, Tableau, or any analysis platform.
+Extends the Verispy project (https://github.com/RiskLens/verispy), producing a CSV file suitable for import into Onspring, Tableau, or any analysis platform. Note that you'll also need to clone the Versipy repo to make this work. 
 
 Filters out non-US data and focuses on specific industry codes, which can/should be edited as needed.
 
