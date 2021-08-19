@@ -4,15 +4,15 @@ import numpy as np
 from verispy import VERIS
 from tkinter import Tk, filedialog, messagebox
 root = Tk()
-root.withdraw() # Hides the weird little tkinter window.
+root.withdraw()  # Hides the weird little tkinter window.
 guide = messagebox.showinfo(title="Welcome to the Veris-to-CSV Utility", message="The Veris Project uploads new incident reports to a repository at https://github.com/vz-risk/VCDB. Once you have downloaded/cloned the latest, locate the \"validated\" folder and provide it to the file picker in the next step.")
 
 # Flexible folder choosing. This is where the validated JSON file location must be provided.
 # Uses code snipped from https://stackoverflow.com/questions/9319317/quick-and-easy-file-dialog-in-python
 root.title("Select the validated JSON file directory.")
-root.attributes('-topmost', True) # Opened windows will be active. above all windows despite of selection.
+root.attributes('-topmost', True)  # Opened windows will be active and on top.
 
-data_dir = filedialog.askdirectory() # Returns opened path as str
+data_dir = filedialog.askdirectory()  # Returns target path as string
 
 v = VERIS(json_dir=data_dir)
 print(v.schema_url)
@@ -21,7 +21,7 @@ print(veris_df.head())
 # Filter for US-based incidents only.
 us_veris_df = veris_df[veris_df["victim.country.US"] == True]
 # Filter for finance and insurance industry only.
-us_veris_df[us_veris_df["victim.industry2.52"] == True]
+# us_veris_df[us_veris_df["victim.industry2.52"] == True]
 
 # There are thousands of columns in the raw data. Most aren't of interest. Start filtering out the extra columns.
 currency_cols = ["victim.revenue.iso_currency_code.AED", "victim.revenue.iso_currency_code.AFN", "victim.revenue.iso_currency_code.ALL", "victim.revenue.iso_currency_code.AMD", "victim.revenue.iso_currency_code.ANG", "victim.revenue.iso_currency_code.AOA", "victim.revenue.iso_currency_code.ARS", "victim.revenue.iso_currency_code.AUD", "victim.revenue.iso_currency_code.AWG", "victim.revenue.iso_currency_code.AZN", "victim.revenue.iso_currency_code.BAM", "victim.revenue.iso_currency_code.BBD", "victim.revenue.iso_currency_code.BCH", "victim.revenue.iso_currency_code.BDT", "victim.revenue.iso_currency_code.BGN", "victim.revenue.iso_currency_code.BHD", "victim.revenue.iso_currency_code.BIF", "victim.revenue.iso_currency_code.BMD", "victim.revenue.iso_currency_code.BND", "victim.revenue.iso_currency_code.BOB", "victim.revenue.iso_currency_code.BRL", "victim.revenue.iso_currency_code.BSD", "victim.revenue.iso_currency_code.BTN", "victim.revenue.iso_currency_code.BWP", "victim.revenue.iso_currency_code.BYR", "victim.revenue.iso_currency_code.BZD", "victim.revenue.iso_currency_code.CAD", "victim.revenue.iso_currency_code.CDF", "victim.revenue.iso_currency_code.CHF", "victim.revenue.iso_currency_code.CLP", "victim.revenue.iso_currency_code.CNY", "victim.revenue.iso_currency_code.COP", "victim.revenue.iso_currency_code.CRC", "victim.revenue.iso_currency_code.CUC", "victim.revenue.iso_currency_code.CUP", "victim.revenue.iso_currency_code.CVE", "victim.revenue.iso_currency_code.CZK", "victim.revenue.iso_currency_code.DJF", "victim.revenue.iso_currency_code.DKK", "victim.revenue.iso_currency_code.DOP", "victim.revenue.iso_currency_code.DZD", "victim.revenue.iso_currency_code.EGP", "victim.revenue.iso_currency_code.ERN", "victim.revenue.iso_currency_code.ETB", "victim.revenue.iso_currency_code.EUR", "victim.revenue.iso_currency_code.Ether", "victim.revenue.iso_currency_code.FJD", "victim.revenue.iso_currency_code.FKP", "victim.revenue.iso_currency_code.GBP", "victim.revenue.iso_currency_code.GEL", "victim.revenue.iso_currency_code.GGP", "victim.revenue.iso_currency_code.GHS", "victim.revenue.iso_currency_code.GIP", "victim.revenue.iso_currency_code.GMD", "victim.revenue.iso_currency_code.GNF", "victim.revenue.iso_currency_code.GTQ", "victim.revenue.iso_currency_code.GYD", "victim.revenue.iso_currency_code.HKD", "victim.revenue.iso_currency_code.HNL", "victim.revenue.iso_currency_code.HRK", "victim.revenue.iso_currency_code.HTG", "victim.revenue.iso_currency_code.HUF", "victim.revenue.iso_currency_code.IDR", "victim.revenue.iso_currency_code.ILS", "victim.revenue.iso_currency_code.IMP", "victim.revenue.iso_currency_code.INR", "victim.revenue.iso_currency_code.IQD", "victim.revenue.iso_currency_code.IRR", "victim.revenue.iso_currency_code.ISK", "victim.revenue.iso_currency_code.JEP", "victim.revenue.iso_currency_code.JMD", "victim.revenue.iso_currency_code.JOD", "victim.revenue.iso_currency_code.JPY", "victim.revenue.iso_currency_code.KES", "victim.revenue.iso_currency_code.KGS", "victim.revenue.iso_currency_code.KHR", "victim.revenue.iso_currency_code.KMF", "victim.revenue.iso_currency_code.KPW", "victim.revenue.iso_currency_code.KRW", "victim.revenue.iso_currency_code.KWD", "victim.revenue.iso_currency_code.KYD", "victim.revenue.iso_currency_code.KZT", "victim.revenue.iso_currency_code.LAK", "victim.revenue.iso_currency_code.LBP", "victim.revenue.iso_currency_code.LKR", "victim.revenue.iso_currency_code.LRD", "victim.revenue.iso_currency_code.LSL", "victim.revenue.iso_currency_code.LTL", "victim.revenue.iso_currency_code.LVL", "victim.revenue.iso_currency_code.LYD", "victim.revenue.iso_currency_code.Litecoin", "victim.revenue.iso_currency_code.MAD", "victim.revenue.iso_currency_code.MDL", "victim.revenue.iso_currency_code.MGA", "victim.revenue.iso_currency_code.MKD", "victim.revenue.iso_currency_code.MMK", "victim.revenue.iso_currency_code.MNT", "victim.revenue.iso_currency_code.MOP", "victim.revenue.iso_currency_code.MRO", "victim.revenue.iso_currency_code.MUR", "victim.revenue.iso_currency_code.MVR", "victim.revenue.iso_currency_code.MWK", "victim.revenue.iso_currency_code.MXN", "victim.revenue.iso_currency_code.MYR", "victim.revenue.iso_currency_code.MZN", "victim.revenue.iso_currency_code.NAD", "victim.revenue.iso_currency_code.NGN", "victim.revenue.iso_currency_code.NIO", "victim.revenue.iso_currency_code.NOK", "victim.revenue.iso_currency_code.NPR", "victim.revenue.iso_currency_code.NZD", "victim.revenue.iso_currency_code.OMR", "victim.revenue.iso_currency_code.PAB", "victim.revenue.iso_currency_code.PEN", "victim.revenue.iso_currency_code.PGK", "victim.revenue.iso_currency_code.PHP", "victim.revenue.iso_currency_code.PKR", "victim.revenue.iso_currency_code.PLN", "victim.revenue.iso_currency_code.PYG", "victim.revenue.iso_currency_code.QAR", "victim.revenue.iso_currency_code.RON", "victim.revenue.iso_currency_code.RSD", "victim.revenue.iso_currency_code.RUB", "victim.revenue.iso_currency_code.RWF", "victim.revenue.iso_currency_code.SAR", "victim.revenue.iso_currency_code.SBD", "victim.revenue.iso_currency_code.SCR", "victim.revenue.iso_currency_code.SDG", "victim.revenue.iso_currency_code.SEK", "victim.revenue.iso_currency_code.SGD", "victim.revenue.iso_currency_code.SHP", "victim.revenue.iso_currency_code.SLL", "victim.revenue.iso_currency_code.SOS", "victim.revenue.iso_currency_code.SPL", "victim.revenue.iso_currency_code.SRD", "victim.revenue.iso_currency_code.STD", "victim.revenue.iso_currency_code.SVC", "victim.revenue.iso_currency_code.SYP", "victim.revenue.iso_currency_code.SZL", "victim.revenue.iso_currency_code.THB", "victim.revenue.iso_currency_code.TJS", "victim.revenue.iso_currency_code.TMT", "victim.revenue.iso_currency_code.TND", "victim.revenue.iso_currency_code.TOP", "victim.revenue.iso_currency_code.TRY", "victim.revenue.iso_currency_code.TTD", "victim.revenue.iso_currency_code.TVD", "victim.revenue.iso_currency_code.TWD", "victim.revenue.iso_currency_code.TZS", "victim.revenue.iso_currency_code.UAH", "victim.revenue.iso_currency_code.UGX", "victim.revenue.iso_currency_code.USD", "victim.revenue.iso_currency_code.UYU", "victim.revenue.iso_currency_code.UZS", "victim.revenue.iso_currency_code.VEF", "victim.revenue.iso_currency_code.VND", "victim.revenue.iso_currency_code.VUV", "victim.revenue.iso_currency_code.WST", "victim.revenue.iso_currency_code.XAF", "victim.revenue.iso_currency_code.XBT", "victim.revenue.iso_currency_code.XCD", "victim.revenue.iso_currency_code.XDR", "victim.revenue.iso_currency_code.XMR", "victim.revenue.iso_currency_code.XOF", "victim.revenue.iso_currency_code.XPF", "victim.revenue.iso_currency_code.YER", "victim.revenue.iso_currency_code.ZAR", "victim.revenue.iso_currency_code.ZEC", "victim.revenue.iso_currency_code.ZMK", "victim.revenue.iso_currency_code.ZWD",
@@ -55,7 +55,7 @@ temp = ["actor.external.variety.Acquaintance", "actor.external.variety.Activist"
         "impact.loss.max_amount", "impact.loss.min_amount",
         "actor.external.variety.Acquaintance", "actor.external.variety.Activist", "actor.external.variety.Auditor", "actor.external.variety.Competitor", "actor.external.variety.Customer", "actor.external.variety.Force majeure", "actor.external.variety.Former employee", "actor.external.variety.Nation-state", "actor.external.variety.Organized crime", "actor.external.variety.Other", "actor.external.variety.State-affiliated", "actor.external.variety.Terrorist", "actor.external.variety.Unaffiliated", "actor.external.variety.Unknown", "actor.internal.variety.Auditor", "actor.internal.variety.Call center", "actor.internal.variety.Cashier", "actor.internal.variety.Developer", "actor.internal.variety.Doctor or nurse", "actor.internal.variety.End-user", "actor.internal.variety.Executive", "actor.internal.variety.Finance", "actor.internal.variety.Guard", "actor.internal.variety.Helpdesk", "actor.internal.variety.Human resources", "actor.internal.variety.Maintenance", "actor.internal.variety.Manager", "actor.internal.variety.Other", "actor.internal.variety.System admin", "actor.internal.variety.Unknown", "asset.notes", "asset.total_amount",
         "impact.loss.amount.Brand damage", "impact.loss.amount.Business disruption", "impact.loss.amount.Competitive advantage", "impact.loss.amount.Legal and regulatory", "impact.loss.amount.Operating costs", "impact.loss.amount.Other", "impact.loss.amount.Response and recovery", "impact.loss.max_amount", "impact.loss.min_amount",
-        "victim.industry.fullname", "victim.industry3", "impact.loss.amount.Asset and fraud"]
+        "victim.industry3", "impact.loss.amount.Asset and fraud"]
 
 impact_type_cols =["impact.loss.variety.Asset and fraud",
         "impact.loss.variety.Brand damage", "impact.loss.variety.Business disruption",
@@ -76,17 +76,18 @@ for col in remove_cols:
 # Rename columns.
 rename_df = filter_df.copy()
 rename_df.rename(columns = {"impact.overall_amount":'Financial Impact', 'timeline.incident.year':'year', 'timeline.incident.month':'month',
-                            'timeline.incident.day':'day', "victim.industry": "Industry Code", "victim.notes": "Notes",
-                             "victim.state": "Incident State", "victim.victim_id":"Reporting Company"}, inplace = True)
+                            'timeline.incident.day':'day', "victim.industry": "Industry Code - Full", "victim.notes": "Notes",
+                             "victim.state": "Incident State", "victim.victim_id":"Reporting Company",
+                            "victim.industry.fullname": "Industry Name"}, inplace = True)
 
 # Pivot throws errors in some data sets due to multiple classifications. Defining custom row filters to compensate.
 # These filters are tailored to the team requirements, and can be modified to suit.
 def actor_type(row):
     if row["actor.External"]:
         return "External"
-    if row["actor.Internal"]:
+    elif row["actor.Internal"]:
         return "Internal"
-    if row["actor.Partner"]:
+    elif row["actor.Partner"]:
         return "Partner"
     return "Unknown"
 
@@ -94,32 +95,32 @@ def actor_type(row):
 def action_type (row):
     if row['action.Environmental']:
       return 'Environmental'
-    if row['action.Error']:
+    elif row['action.Error']:
        return 'Error'
-    if row['action.Hacking']:
+    elif row['action.Hacking']:
         return 'Hacking'
-    if row['action.Malware']:
+    elif row['action.Malware']:
         return 'Malware'
-    if row['action.Misuse']:
+    elif row['action.Misuse']:
         return 'Misuse'
-    if row['action.Physical']:
+    elif row['action.Physical']:
         return 'Physical'
-    if row['action.Social']:
+    elif row['action.Social']:
         return 'Social'
     return 'Unknown'
 
 def asset_type(row):
     if any([row["asset.assets.variety.T - ATM"], row["asset.assets.variety.T - Gas terminal"], row["asset.assets.variety.T - Kiosk"], row["asset.assets.variety.T - Other"], row["asset.assets.variety.T - PED pad"], row["asset.assets.variety.T - Unknown"]]):
         return "Infrastructure (facilities)"
-    if any([row["asset.assets.variety.P - Cashier"], row["asset.assets.variety.P - Customer"], row["asset.assets.variety.P - Developer"], row["asset.assets.variety.P - End-user"], row["asset.assets.variety.P - End-user or employee"], row["asset.assets.variety.P - Executive"], row["asset.assets.variety.P - Finance"], row["asset.assets.variety.P - Former employee"], row["asset.assets.variety.P - Guard"], row["asset.assets.variety.P - Helpdesk"], row["asset.assets.variety.P - Human resources"], row["asset.assets.variety.P - Maintenance"], row["asset.assets.variety.P - Manager"], row["asset.assets.variety.P - Other"], row["asset.assets.variety.P - Other employee"], row["asset.assets.variety.P - Partner"], row["asset.assets.variety.P - System admin"], row["asset.assets.variety.P - Unknown"], row["asset.assets.variety.P - Auditor"], row["asset.assets.variety.P - Call center"]]):
+    elif any([row["asset.assets.variety.P - Cashier"], row["asset.assets.variety.P - Customer"], row["asset.assets.variety.P - Developer"], row["asset.assets.variety.P - End-user"], row["asset.assets.variety.P - End-user or employee"], row["asset.assets.variety.P - Executive"], row["asset.assets.variety.P - Finance"], row["asset.assets.variety.P - Former employee"], row["asset.assets.variety.P - Guard"], row["asset.assets.variety.P - Helpdesk"], row["asset.assets.variety.P - Human resources"], row["asset.assets.variety.P - Maintenance"], row["asset.assets.variety.P - Manager"], row["asset.assets.variety.P - Other"], row["asset.assets.variety.P - Other employee"], row["asset.assets.variety.P - Partner"], row["asset.assets.variety.P - System admin"], row["asset.assets.variety.P - Unknown"], row["asset.assets.variety.P - Auditor"], row["asset.assets.variety.P - Call center"]]):
         return "People & Skills"
-    if any([row["asset.assets.variety.N - Access reader"], row["asset.assets.variety.N - Broadband"], row["asset.assets.variety.N - Camera"], row["asset.assets.variety.N - Firewall"], row["asset.assets.variety.N - HSM"], row["asset.assets.variety.N - IDS"], row["asset.assets.variety.N - LAN"], row["asset.assets.variety.N - NAS"], row["asset.assets.variety.N - Other"], row["asset.assets.variety.N - PBX"], row["asset.assets.variety.N - PLC"], row["asset.assets.variety.N - Private WAN"], row["asset.assets.variety.N - Public WAN"], row["asset.assets.variety.N - RTU"], row["asset.assets.variety.N - Router or switch"], row["asset.assets.variety.N - SAN"], row["asset.assets.variety.N - Telephone"], row["asset.assets.variety.N - Unknown"], row["asset.assets.variety.N - VoIP adapter"], row["asset.assets.variety.N - WLAN"], row["asset.assets.variety.S - DCS"], row["asset.assets.variety.S - DHCP"], row["asset.assets.variety.S - DNS"], row["asset.assets.variety.S - ICS"], row["asset.assets.variety.S - Log"], row["asset.assets.variety.S - Mainframe"], row["asset.assets.variety.S - Other"], row["asset.assets.variety.S - POS controller"], row["asset.assets.variety.S - Payment switch"], row["asset.assets.variety.S - Print"], row["asset.assets.variety.S - Proxy"], row["asset.assets.variety.S - Remote access"], row["asset.assets.variety.U - Auth token"], row["asset.assets.variety.U - Desktop"], row["asset.assets.variety.U - Desktop or laptop"], row["asset.assets.variety.U - Laptop"], row["asset.assets.variety.U - Media"], row["asset.assets.variety.U - Mobile phone"], row["asset.assets.variety.U - Other"], row["asset.assets.variety.U - POS terminal"], row["asset.assets.variety.U - Peripheral"], row["asset.assets.variety.U - Tablet"], row["asset.assets.variety.U - Telephone"], row["asset.assets.variety.U - Unknown"], row["asset.assets.variety.U - VoIP phone"]]):
+    elif any([row["asset.assets.variety.N - Access reader"], row["asset.assets.variety.N - Broadband"], row["asset.assets.variety.N - Camera"], row["asset.assets.variety.N - Firewall"], row["asset.assets.variety.N - HSM"], row["asset.assets.variety.N - IDS"], row["asset.assets.variety.N - LAN"], row["asset.assets.variety.N - NAS"], row["asset.assets.variety.N - Other"], row["asset.assets.variety.N - PBX"], row["asset.assets.variety.N - PLC"], row["asset.assets.variety.N - Private WAN"], row["asset.assets.variety.N - Public WAN"], row["asset.assets.variety.N - RTU"], row["asset.assets.variety.N - Router or switch"], row["asset.assets.variety.N - SAN"], row["asset.assets.variety.N - Telephone"], row["asset.assets.variety.N - Unknown"], row["asset.assets.variety.N - VoIP adapter"], row["asset.assets.variety.N - WLAN"], row["asset.assets.variety.S - DCS"], row["asset.assets.variety.S - DHCP"], row["asset.assets.variety.S - DNS"], row["asset.assets.variety.S - ICS"], row["asset.assets.variety.S - Log"], row["asset.assets.variety.S - Mainframe"], row["asset.assets.variety.S - Other"], row["asset.assets.variety.S - POS controller"], row["asset.assets.variety.S - Payment switch"], row["asset.assets.variety.S - Print"], row["asset.assets.variety.S - Proxy"], row["asset.assets.variety.S - Remote access"], row["asset.assets.variety.U - Auth token"], row["asset.assets.variety.U - Desktop"], row["asset.assets.variety.U - Desktop or laptop"], row["asset.assets.variety.U - Laptop"], row["asset.assets.variety.U - Media"], row["asset.assets.variety.U - Mobile phone"], row["asset.assets.variety.U - Other"], row["asset.assets.variety.U - POS terminal"], row["asset.assets.variety.U - Peripheral"], row["asset.assets.variety.U - Tablet"], row["asset.assets.variety.U - Telephone"], row["asset.assets.variety.U - Unknown"], row["asset.assets.variety.U - VoIP phone"]]):
         return "IT Infrastructure"
-    if any([row["asset.assets.variety.S - Web application"], row["asset.assets.variety.S - VM host"]]):
+    elif any([row["asset.assets.variety.S - Web application"], row["asset.assets.variety.S - VM host"]]):
         return "Applications"
-    if any([row["asset.assets.variety.E - Other"], row["asset.assets.variety.E - Telematics"], row["asset.assets.variety.E - Telemetry"], row["asset.assets.variety.E - Unknown"], row["asset.assets.variety.M - Disk drive"], row["asset.assets.variety.M - Disk media"], row["asset.assets.variety.M - Documents"], row["asset.assets.variety.M - Fax"], row["asset.assets.variety.M - Flash drive"], row["asset.assets.variety.M - Other"], row["asset.assets.variety.M - Payment card"], row["asset.assets.variety.M - Smart card"], row["asset.assets.variety.M - Tapes"], row["asset.assets.variety.M - Unknown"], row["asset.assets.variety.S - Code repository"], row["asset.assets.variety.S - Database"], row["asset.assets.variety.S - Directory"], row["asset.assets.variety.S - File"], row["asset.assets.variety.S - Mail"]]):
+    elif any([row["asset.assets.variety.E - Other"], row["asset.assets.variety.E - Telematics"], row["asset.assets.variety.E - Telemetry"], row["asset.assets.variety.E - Unknown"], row["asset.assets.variety.M - Disk drive"], row["asset.assets.variety.M - Disk media"], row["asset.assets.variety.M - Documents"], row["asset.assets.variety.M - Fax"], row["asset.assets.variety.M - Flash drive"], row["asset.assets.variety.M - Other"], row["asset.assets.variety.M - Payment card"], row["asset.assets.variety.M - Smart card"], row["asset.assets.variety.M - Tapes"], row["asset.assets.variety.M - Unknown"], row["asset.assets.variety.S - Code repository"], row["asset.assets.variety.S - Database"], row["asset.assets.variety.S - Directory"], row["asset.assets.variety.S - File"], row["asset.assets.variety.S - Mail"]]):
         return "Information or Data"
-    if any([row["asset.assets.variety.S - Authentication"], row["asset.assets.variety.S - Backup"], row["asset.assets.variety.S - Configuration or patch management"]]):
+    elif any([row["asset.assets.variety.S - Authentication"], row["asset.assets.variety.S - Backup"], row["asset.assets.variety.S - Configuration or patch management"]]):
         return "Process"
     return "Unknown"
 
@@ -127,17 +128,17 @@ def asset_type(row):
 def event_type(row):
     if row["impact.loss.variety.Asset and fraud"]:
         return "Asset and fraud"
-    if row["impact.loss.variety.Brand damage"]:
+    elif row["impact.loss.variety.Brand damage"]:
         return "Brand damage"
-    if row["impact.loss.variety.Business disruption"]:
+    elif row["impact.loss.variety.Business disruption"]:
         return "Business disruption"
-    if row["impact.loss.variety.Competitive advantage"]:
+    elif row["impact.loss.variety.Competitive advantage"]:
         return "Loss of competitive advantage"
-    if row["impact.loss.variety.Legal and regulatory"]:
+    elif row["impact.loss.variety.Legal and regulatory"]:
         return "Legal and regulatory"
-    if row["impact.loss.variety.Operating costs"]:
+    elif row["impact.loss.variety.Operating costs"]:
         return "Increased operating costs"
-    if row["impact.loss.variety.Response and recovery"]:
+    elif row["impact.loss.variety.Response and recovery"]:
         return "Response and recovery"
     return "Other"
 
@@ -153,17 +154,19 @@ classified_df['Type of Actor'] = classified_df.apply(lambda row: actor_type(row)
 classified_df['Impact'] = classified_df.apply(lambda row: event_type(row), axis=1)
 classified_df['Incident ID'] = classified_df.index
 # Format the date, providing defaults if values are missing from the record.
-if classified_df["day"] is None:
-    classified_df["day"]='01'
-if classified_df["month"] is None:
-    classified_df["month"] = '01'
 
+
+classified_df['day_missing'] = pandas.isnull(classified_df['day'])
+classified_df['month_missing'] = pandas.isnull(classified_df['month'])
+classified_df.loc[classified_df['day_missing'], 'day'] = '01'
+classified_df.loc[classified_df['month_missing'], 'month'] = '01'
 
 classified_df['Incident Date'] = pandas.to_datetime(classified_df[['year', 'month', 'day']], format='%m/%d/%Y', errors='coerce')
-
+classified_df['Industry Code'] = classified_df['Industry Code - Full'].str[:2]
 action_cols_final = ["action.Environmental", "action.Error", "action.Hacking", "action.Malware", "action.Misuse",
                      "action.Physical", "action.Social", "action.Unknown"]
-date_cols_final = ["day", "month"]
+date_cols_final = ["day", "month", "day_missing", "month_missing"]
+
 remove_final_cols = itertools.chain( action_cols_final, asset_type_cols, actor_cols, impact_type_cols, date_cols_final)
 print("Removing final columns.")
 final_df = classified_df.copy()
